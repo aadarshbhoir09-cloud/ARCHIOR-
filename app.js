@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initQuickBookingForm();
   initSmoothScroll();
   initScrollMaskReveal();
+  initTextAnimations();
 });
 
 // 1. Mobile Menu Drawer
@@ -505,4 +506,55 @@ function initScrollMaskReveal() {
 
   // Initial trigger
   onScroll();
+}
+
+// 11. Global Editorial Text Reveal Animations on Scroll
+function initTextAnimations() {
+  // A. Dedicated Entrance Stagger for Hero Section Text
+  const heroTextContainer = document.querySelector('#home .lg\\:col-span-5');
+  if (heroTextContainer) {
+    const heroDirectChildren = heroTextContainer.children;
+    for (let i = 0; i < heroDirectChildren.length; i++) {
+      heroDirectChildren[i].classList.add(`hero-fade-in-${Math.min(i + 1, 5)}`);
+    }
+  }
+
+  // B. Universal Scroll-Triggered Text Reveal for All Sections
+  const sections = document.querySelectorAll('main section, footer');
+
+  const observerOptions = {
+    threshold: 0.12,
+    rootMargin: '0px 0px -40px 0px'
+  };
+
+  const textObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+
+  sections.forEach(section => {
+    // Skip hero left column since it already has entrance animation
+    const textElements = section.querySelectorAll('h2, h3, h4, p, .pill-badge, .room-card-badge, .arch-card, .bhk-choice');
+
+    let delayIndex = 0;
+    textElements.forEach(el => {
+      // Do not re-animate hero left text
+      if (el.closest('#home .lg\\:col-span-5')) return;
+
+      el.classList.add('reveal-text');
+
+      // Stagger delays within the same section block
+      const delay = (delayIndex % 5) * 80;
+      if (delay > 0) {
+        el.style.transitionDelay = `${delay}ms`;
+      }
+      delayIndex++;
+
+      textObserver.observe(el);
+    });
+  });
 }

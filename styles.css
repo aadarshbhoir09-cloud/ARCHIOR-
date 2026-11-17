@@ -452,6 +452,62 @@ img {
   transform: scale(1.05);
 }
 
+/* ==========================================================
+   EDITORIAL TEXT ANIMATIONS & SCROLL REVEALS
+   ========================================================== */
+
+/* Universal Scroll Reveal for Text */
+.reveal-text {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-text.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger Delay Classes */
+.delay-75  { transition-delay: 75ms; }
+.delay-100 { transition-delay: 100ms; }
+.delay-150 { transition-delay: 150ms; }
+.delay-200 { transition-delay: 200ms; }
+.delay-250 { transition-delay: 250ms; }
+.delay-300 { transition-delay: 300ms; }
+.delay-350 { transition-delay: 350ms; }
+.delay-400 { transition-delay: 400ms; }
+.delay-500 { transition-delay: 500ms; }
+
+/* Hero Text Initial Stagger Animation */
+@keyframes heroTextSlideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(32px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-fade-in-1 {
+  animation: heroTextSlideUp 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+}
+.hero-fade-in-2 {
+  animation: heroTextSlideUp 0.95s cubic-bezier(0.16, 1, 0.3, 1) 0.25s both;
+}
+.hero-fade-in-3 {
+  animation: heroTextSlideUp 0.95s cubic-bezier(0.16, 1, 0.3, 1) 0.42s both;
+}
+.hero-fade-in-4 {
+  animation: heroTextSlideUp 0.95s cubic-bezier(0.16, 1, 0.3, 1) 0.58s both;
+}
+.hero-fade-in-5 {
+  animation: heroTextSlideUp 0.95s cubic-bezier(0.16, 1, 0.3, 1) 0.72s both;
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .ba-slider {
@@ -466,6 +522,24 @@ img {
   .arch-mask {
     border-top-left-radius: 100px;
     border-top-right-radius: 100px;
+  }
+}
+
+/* Accessibility: Respect Reduced Motion Preferences */
+@media (prefers-reduced-motion: reduce) {
+  .reveal-text,
+  .hero-mask-reveal,
+  .arch-portal-wrapper,
+  .hero-fade-in-1,
+  .hero-fade-in-2,
+  .hero-fade-in-3,
+  .hero-fade-in-4,
+  .hero-fade-in-5 {
+    animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    clip-path: none !important;
   }
 }
 
