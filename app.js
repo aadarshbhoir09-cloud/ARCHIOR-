@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initTurnkeyGallery();
   initQuickBookingForm();
   initSmoothScroll();
+  initScrollMaskReveal();
 });
 
 // 1. Mobile Menu Drawer
@@ -410,4 +411,98 @@ function initSmoothScroll() {
       }
     });
   });
+}
+
+// 10. Scroll Mask Reveal Animation (Hero Section & Architectural Portal)
+function initScrollMaskReveal() {
+  const heroContainer = document.getElementById('heroMaskContainer');
+  const heroImg = document.getElementById('heroMainImage');
+  const heroArch = document.getElementById('heroArchVignette');
+  const heroCard = document.getElementById('heroFloatingCard');
+  
+  const portalWrapper = document.getElementById('archPortalWrapper');
+  const portalImg = document.getElementById('archPortalImage');
+  const portalSection = document.getElementById('scrollMaskSection');
+
+  // Trigger initial smooth entrance animation for Hero Image
+  if (heroContainer) {
+    heroContainer.classList.add('hero-animate-in');
+  }
+
+  let ticking = false;
+
+  function onScroll() {
+    const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+
+    // A. Hero Section Scroll Mask Reveal & Parallax Depth (first 0 - 800px)
+    if (heroContainer && scrollY < 900) {
+      const heroProgress = Math.min(scrollY / 600, 1);
+      
+      // Dynamic corner radius & subtle mask breathing
+      const topRadius = Math.round(32 + heroProgress * 40); // 32px -> 72px arch top
+      const clipInset = (heroProgress * 1.5).toFixed(1); // 0% -> 1.5%
+      heroContainer.style.clipPath = `inset(${clipInset}% ${clipInset}% round ${topRadius}px 32px 32px 32px)`;
+      
+      if (heroImg) {
+        // Subtle parallax drift & scale
+        heroImg.style.transform = `translateY(${scrollY * 0.12}px) scale(${1 + heroProgress * 0.04})`;
+      }
+      if (heroArch) {
+        // Floating arch overlay drifts with opposing parallax
+        heroArch.style.transform = `translateY(${scrollY * -0.15}px)`;
+      }
+      if (heroCard) {
+        // Floating project preview pill drifts smoothly
+        heroCard.style.transform = `translateY(${scrollY * -0.08}px)`;
+      }
+    }
+
+    // B. Architectural Portal On-Scroll Mask Expansion Section
+    if (portalSection && portalWrapper) {
+      const rect = portalSection.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+
+      // When the portal section enters viewport
+      if (rect.top < windowHeight && rect.bottom > 0) {
+        const totalDistance = windowHeight + rect.height;
+        const currentDistance = windowHeight - rect.top;
+        const rawProgress = Math.min(Math.max(currentDistance / (totalDistance * 0.7), 0), 1);
+
+        // Smooth cubic ease-out calculation for organic architectural movement
+        const easeProgress = 1 - Math.pow(1 - rawProgress, 2.2);
+
+        // Responsive base width: 72% -> 100% full bleed
+        const isMobile = window.innerWidth < 768;
+        const startWidth = isMobile ? 90 : 72;
+        const currentWidth = (startWidth + (100 - startWidth) * easeProgress).toFixed(1);
+
+        // Radius: Arched curve down to 0px
+        const startRadius = isMobile ? 120 : 260;
+        const currentRadius = Math.round(startRadius * (1 - easeProgress));
+        const bottomRadius = Math.round(32 * (1 - easeProgress * 0.8));
+
+        portalWrapper.style.width = `${currentWidth}%`;
+        portalWrapper.style.borderRadius = `${currentRadius}px ${currentRadius}px ${bottomRadius}px ${bottomRadius}px`;
+        portalWrapper.style.clipPath = `inset(0% 0% 0% 0% round ${currentRadius}px ${currentRadius}px ${bottomRadius}px ${bottomRadius}px)`;
+
+        if (portalImg) {
+          // Scale down from 1.18 to 1.02 as the portal expands outwards
+          const currentScale = (1.18 - (0.15 * easeProgress)).toFixed(3);
+          portalImg.style.transform = `scale(${currentScale}) translateY(${(1 - easeProgress) * -12}px)`;
+        }
+      }
+    }
+
+    ticking = false;
+  }
+
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      window.requestAnimationFrame(onScroll);
+      ticking = true;
+    }
+  }, { passive: true });
+
+  // Initial trigger
+  onScroll();
 }

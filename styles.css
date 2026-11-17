@@ -351,7 +351,78 @@ img {
   outline-offset: 3px;
 }
 
-/* Architectural arched image mask */
+/* ==========================================================
+   SCROLL MASK REVEAL ANIMATIONS (Hero & Portal)
+   ========================================================== */
+
+/* 1. Hero Image Entrance & Scroll Mask */
+.hero-mask-reveal {
+  border-radius: 32px;
+  position: relative;
+  overflow: hidden;
+  transition: clip-path 0.15s ease-out, border-radius 0.15s ease-out, box-shadow 0.3s ease;
+  clip-path: inset(0% 0% 0% 0% round 32px);
+  will-change: clip-path, transform;
+}
+
+.hero-mask-overlay {
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 5;
+  transition: opacity 0.3s ease;
+}
+
+/* Initial entrance wipe for hero visual */
+@keyframes heroClipEntrance {
+  0% {
+    clip-path: inset(12% 8% 12% 8% round 140px 140px 32px 32px);
+    opacity: 0.3;
+    transform: scale(0.96);
+  }
+  100% {
+    clip-path: inset(0% 0% 0% 0% round 32px);
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.hero-animate-in {
+  animation: heroClipEntrance 1.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Floating arch subtle parallax */
+.hero-floating-arch {
+  transition: transform 0.15s ease-out;
+}
+
+.hero-floating-pill {
+  transition: transform 0.15s ease-out, box-shadow 0.3s ease;
+}
+
+/* 2. Architectural Arch Portal on Scroll */
+.arch-portal-wrapper {
+  width: 72%;
+  border-radius: 260px 260px 32px 32px;
+  clip-path: inset(0% 0% 0% 0% round 260px 260px 32px 32px);
+  margin-left: auto;
+  margin-right: auto;
+  transition: width 0.12s ease-out, border-radius 0.12s ease-out, clip-path 0.12s ease-out;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.16);
+  position: relative;
+  overflow: hidden;
+  will-change: width, border-radius, clip-path;
+}
+
+.arch-portal-wrapper img {
+  transform: scale(1.18);
+  transition: transform 0.12s ease-out;
+  will-change: transform;
+}
+
+/* Architectural arched image mask helper */
 .arch-mask {
   border-top-left-radius: 180px;
   border-top-right-radius: 180px;

@@ -257,17 +257,21 @@
           </div>
 
           <!-- Hero Image with Arched Aesthetic & Floating Card (Right 7 Cols) -->
-          <div class="lg:col-span-7 relative">
-            <div class="relative w-full h-[460px] sm:h-[580px] rounded-3xl overflow-hidden shadow-2xl bg-stone-100 border border-brand-border/60 group">
+          <div class="lg:col-span-7 relative hero-visual-col">
+            <div id="heroMaskContainer" class="hero-mask-reveal relative w-full h-[460px] sm:h-[580px] overflow-hidden shadow-2xl bg-stone-100 border border-brand-border/60 group">
               <!-- Main Hero Room Photo -->
               <img 
+                id="heroMainImage"
                 src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1600&q=85" 
                 alt="Archior Interior Living Room Design with Arch Niche and Boucle Sofa"
-                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                class="w-full h-full object-cover will-change-transform"
               />
 
+              <!-- Architectural Mask Border Overlay -->
+              <div class="hero-mask-overlay"></div>
+
               <!-- Architectural Arch Vignette Overlay in Top Corner (Matches Template) -->
-              <div class="absolute top-6 right-6 w-36 h-48 rounded-t-full rounded-b-2xl overflow-hidden shadow-lg border-2 border-white/80 hidden sm:block">
+              <div id="heroArchVignette" class="hero-floating-arch absolute top-6 right-6 w-36 h-48 rounded-t-full rounded-b-2xl overflow-hidden shadow-lg border-2 border-white/80 hidden sm:block will-change-transform z-10">
                 <img 
                   src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=600&q=80" 
                   alt="Arch detail" 
@@ -276,7 +280,7 @@
               </div>
 
               <!-- Floating Preview Card (Matches Template Bottom Right Floating Pill) -->
-              <div class="absolute bottom-6 right-6 max-w-xs bg-white/95 backdrop-blur-md p-4 rounded-2xl shadow-xl border border-white/60 flex items-center gap-4 transition hover:bg-white">
+              <div id="heroFloatingCard" class="hero-floating-pill absolute bottom-6 right-6 max-w-xs bg-white/95 backdrop-blur-md p-4 rounded-2xl shadow-xl border border-white/60 flex items-center gap-4 transition hover:bg-white will-change-transform z-10">
                 <div class="flex-1">
                   <span class="text-[10px] uppercase tracking-wider text-brand-muted font-semibold block">Signature Project</span>
                   <h4 class="font-serif text-base font-semibold text-stone-900">Skyline Jewel Suite</h4>
@@ -294,6 +298,49 @@
             </div>
           </div>
 
+        </div>
+      </div>
+    </section>
+
+    <!-- SCROLL-TRIGGERED ARCHITECTURAL PORTAL MASK REVEAL -->
+    <section id="scrollMaskSection" class="relative py-12 lg:py-20 overflow-hidden bg-brand-sand/40 border-t border-brand-border/60">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center mb-8">
+        <span class="pill-badge mb-3">
+          <span class="text-brand-gold">✦</span>
+          <span>IMMERSIVE ARCHITECTURAL REVEAL</span>
+        </span>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-serif text-brand-charcoal font-medium">
+          Step into crafted spaces
+        </h2>
+        <p class="text-stone-500 text-xs sm:text-sm mt-2 max-w-md mx-auto font-light">
+          Scroll down to unmask the architectural portal and experience the room in panoramic scale.
+        </p>
+      </div>
+
+      <!-- Mask Reveal Portal Container -->
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div id="archPortalWrapper" class="arch-portal-wrapper relative mx-auto overflow-hidden shadow-2xl">
+          <img 
+            id="archPortalImage"
+            src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=2000&q=85" 
+            alt="Panoramic Archior Luxury Penthouse" 
+            class="w-full h-[380px] sm:h-[500px] lg:h-[600px] object-cover"
+          />
+          <!-- Portal Gradient & Subtle Editorial Caption -->
+          <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent flex flex-col justify-end p-6 sm:p-12 text-white">
+            <span class="text-xs uppercase tracking-widest text-amber-300 font-semibold mb-2">Turnkey Penthouse Commission</span>
+            <h3 class="font-serif text-2xl sm:text-4xl lg:text-5xl font-medium text-white max-w-2xl leading-tight">
+              Where light, proportions & natural textures converge.
+            </h3>
+            <div class="flex flex-wrap items-center gap-4 mt-4">
+              <span class="text-xs text-stone-300">Panvel, Navi Mumbai · 2,800 sq.ft. Turnkey</span>
+              <span class="text-stone-400 hidden sm:inline">·</span>
+              <button class="open-consultation-btn inline-flex items-center gap-1.5 text-xs text-white bg-white/20 hover:bg-white/30 backdrop-blur-md py-2 px-4 rounded-full transition">
+                <span>Request Site Consultation</span>
+                <i data-lucide="arrow-right" class="w-3 h-3"></i>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </section>
